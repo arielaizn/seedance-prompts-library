@@ -170,10 +170,10 @@ function rp(list){
     io.observe(el);
     var v=el.querySelector('video');
     if(!v) return;
-    el.addEventListener('mouseenter',function(){v.play().catch(function(){});});
-    el.addEventListener('mouseleave',function(){v.pause();v.currentTime=0;});
+    el.addEventListener('mouseenter',function(){v.muted=false;v.play().catch(function(){v.muted=true;v.play().catch(function(){});});});
+    el.addEventListener('mouseleave',function(){v.pause();v.currentTime=0;v.muted=true;});
     // Mobile: tap to play/pause
-    el.addEventListener('click',function(){if(v.paused){v.play().catch(function(){});}else{v.pause();}});
+    el.addEventListener('click',function(){if(v.paused){v.muted=false;v.play().catch(function(){v.muted=true;v.play().catch(function(){});});}else{v.pause();v.muted=true;}});
   });
 }
 
@@ -185,7 +185,7 @@ function toggleMute(e,id){
   if(!v)return;
   v.muted=!v.muted;
   b.textContent=v.muted?'🔇':'🔊';
-  b.title=v.muted?'הדלק סאונד':'כבה סאונד';
+  b.title=v.muted?'הדלק סאונד':'כבה סאונד'; b.textContent=v.muted?'🔇':'🔊';
 }
 function cp(btn){navigator.clipboard.writeText(btn.getAttribute('data-p')).then(()=>{btn.textContent='✓ הועתק!';btn.classList.add('ok');setTimeout(()=>{btn.textContent='העתק';btn.classList.remove('ok');},2000);});}
 function fc(cat,btn){_c=cat;document.querySelectorAll('.fb').forEach(b=>b.classList.remove('active'));btn.classList.add('active');af();}
