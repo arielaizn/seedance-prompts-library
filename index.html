@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ספריית פרומפטים Seedance 2.0 — PixMind Studio</title>
+  <meta name="description" content="29 פרומפטים מקצועיים לSeedance 2.0 — בחינם. Cinematic, Action, Freeze, Nature, Urban, Abstract ועוד." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;700;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0a0a0a;
+      --fg: #fafafa;
+      --accent: #dfe104;
+      --accent-fg: #000;
+      --muted: #737373;
+      --border: #262626;
+      --card-bg: #141414;
+      --media-bg: #1a1a1a;
+    }
+    html, body { background: var(--bg); color: var(--fg); font-family: 'Heebo', sans-serif; min-height: 100vh; }
+
+    /* HEADER */
+    header {
+      border-bottom: 1px solid var(--border);
+      padding: 20px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .logo { font-size: 14px; font-weight: 700; color: var(--fg); text-decoration: none; letter-spacing: 1px; }
+    .logo span { color: var(--accent); }
+    .back-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 8px 16px;
+      font-size: 12px;
+      font-family: 'Heebo', sans-serif;
+      cursor: pointer;
+      text-decoration: none;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .back-btn:hover { color: var(--fg); border-color: var(--fg); }
+
+    /* HERO */
+    .hero {
+      padding: 80px 40px 48px;
+      border-bottom: 1px solid var(--border);
+    }
+    .eyebrow { font-size: 12px; letter-spacing: 1.2px; color: var(--accent); margin-bottom: 16px; }
+    h1 { font-size: clamp(28px, 5vw, 52px); font-weight: 900; line-height: 1.1; letter-spacing: -1px; color: var(--fg); margin-bottom: 16px; }
+    .hero-sub { font-size: 16px; color: var(--muted); line-height: 1.7; max-width: 560px; }
+    .hero-meta { margin-top: 24px; display: flex; gap: 32px; flex-wrap: wrap; }
+    .hero-stat { display: flex; flex-direction: column; gap: 4px; }
+    .hero-stat-num { font-size: 28px; font-weight: 900; color: var(--fg); }
+    .hero-stat-label { font-size: 11px; letter-spacing: 1px; color: var(--muted); }
+
+    /* CONTROLS */
+    .controls {
+      padding: 32px 40px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .filters { display: flex; gap: 8px; flex-wrap: wrap; }
+    .filter-btn {
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 7px 16px;
+      font-size: 12px;
+      font-family: 'Heebo', sans-serif;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .filter-btn.active { background: var(--accent); color: var(--accent-fg); border-color: var(--accent); font-weight: 700; }
+    .filter-btn:hover:not(.active) { border-color: var(--fg); color: var(--fg); }
+    .search-wrap { position: relative; }
+    .search-input {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      color: var(--fg);
+      padding: 10px 16px;
+      font-size: 13px;
+      font-family: 'Heebo', sans-serif;
+      outline: none;
+      width: 240px;
+      transition: border-color 0.15s;
+    }
+    .search-input:focus { border-color: var(--accent); }
+    .search-input::placeholder { color: var(--muted); }
+
+    /* GRID */
+    .grid-wrap { padding: 40px; }
+    .results-count { font-size: 12px; color: var(--muted); letter-spacing: 0.5px; margin-bottom: 24px; }
+    #prompts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    /* CARD */
+    .prompt-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      transition: border-color 0.15s;
+    }
+    .prompt-card:hover { border-color: #3a3a3a; }
+    .card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+    .card-title { font-size: 16px; font-weight: 700; color: var(--fg); line-height: 1.4; }
+    .card-difficulty {
+      font-size: 10px;
+      letter-spacing: 0.5px;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      padding: 2px 8px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .card-difficulty.beginner { color: #4ade80; border-color: #4ade80; }
+    .card-difficulty.intermediate { color: var(--accent); border-color: var(--accent); }
+    .card-difficulty.advanced { color: #f97316; border-color: #f97316; }
+    .card-difficulty.expert { color: #ef4444; border-color: #ef4444; }
+    .card-prompt {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.65;
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      flex: 1;
+    }
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border);
+      padding-top: 14px;
+    }
+    .card-category { font-size: 11px; color: var(--muted); letter-spacing: 0.5px; }
+    .copy-btn {
+      background: var(--accent);
+      color: var(--accent-fg);
+      border: none;
+      padding: 7px 16px;
+      font-size: 11px;
+      font-weight: 700;
+      font-family: 'Heebo', sans-serif;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+    .copy-btn:hover { opacity: 0.85; }
+    .copy-btn.copied { background: #4ade80; }
+
+    /* EMPTY */
+    .empty { text-align: center; padding: 80px 20px; color: var(--muted); font-size: 15px; grid-column: 1/-1; }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    footer p { font-size: 12px; color: var(--muted); }
+    footer a { color: var(--accent); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    /* LOADING */
+    .loading { display: flex; align-items: center; justify-content: center; padding: 80px; grid-column: 1/-1; }
+    .spinner { width: 28px; height: 28px; border: 2px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.6s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    @media (max-width: 640px) {
+      header, .controls, .grid-wrap, .hero { padding-left: 20px; padding-right: 20px; }
+      h1 { font-size: 28px; }
+      .search-input { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="https://arielaizenshtat.com" class="logo">PIXMIND <span>STUDIO</span></a>
+  <a href="https://arielaizenshtat.com/guides/seedance-2-prompt-engineering-guide" class="back-btn">← חזרה למדריך</a>
+</header>
+
+<section class="hero">
+  <p class="eyebrow">// ספריית פרומפטים חינמית</p>
+  <h1>Seedance 2.0<br/>Prompt Library</h1>
+  <p class="hero-sub">29 פרומפטים שנבחרו בקפידה — רק מה שעבד באמת. Cinematic, Action, Freeze, Nature, Urban, Abstract ועוד. לשימוש חופשי.</p>
+  <div class="hero-meta">
+    <div class="hero-stat"><span class="hero-stat-num" id="total-count">29</span><span class="hero-stat-label">פרומפטים</span></div>
+    <div class="hero-stat"><span class="hero-stat-num">8</span><span class="hero-stat-label">קטגוריות</span></div>
+    <div class="hero-stat"><span class="hero-stat-num">100%</span><span class="hero-stat-label">חינם</span></div>
+  </div>
+</section>
+
+<div class="controls">
+  <div class="filters" id="filters">
+    <button class="filter-btn active" onclick="filterByCategory('all',this)">הכל</button>
+    <button class="filter-btn" onclick="filterByCategory('cinematic',this)">Cinematic</button>
+    <button class="filter-btn" onclick="filterByCategory('action',this)">Action</button>
+    <button class="filter-btn" onclick="filterByCategory('freeze',this)">Freeze</button>
+    <button class="filter-btn" onclick="filterByCategory('nature',this)">Nature</button>
+    <button class="filter-btn" onclick="filterByCategory('urban',this)">Urban</button>
+    <button class="filter-btn" onclick="filterByCategory('reference-image',this)">Reference</button>
+    <button class="filter-btn" onclick="filterByCategory('abstract',this)">Abstract</button>
+    <button class="filter-btn" onclick="filterByCategory('advanced-technique',this)">Advanced</button>
+  </div>
+  <div class="search-wrap">
+    <input class="search-input" type="text" id="search-input" placeholder="חיפוש פרומפט..." oninput="filterPrompts()" />
+  </div>
+</div>
+
+<div class="grid-wrap">
+  <p class="results-count" id="results-count"></p>
+  <div id="prompts-grid">
+    <div class="loading"><div class="spinner"></div></div>
+  </div>
+</div>
+
+<footer>
+  <p>נבנה על ידי <a href="https://arielaizenshtat.com">אריאל איזנשטט — PixMind Studio</a></p>
+  <p>Seedance 2.0 by ByteDance</p>
+</footer>
+
+<script>
+  var ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFiY21wdmxwdXB5aHFyeXh0amhzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYyNTU3NDMsImV4cCI6MjA5MTgzMTc0M30.UWbnWMVmEl1ZbGa3r0w3WacPbJQ3A39wFraypn_u24k';
+  var SB_URL = 'https://qbcmpvlpupyhqryxtjhs.supabase.co';
+  var _all = [];
+  var _activeCategory = 'all';
+
+  fetch(SB_URL + '/rest/v1/prompts?select=*&order=category,title', {
+    headers: { 'apikey': ANON, 'Authorization': 'Bearer ' + ANON }
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    _all = data;
+    document.getElementById('total-count').textContent = data.length;
+    renderPrompts(data);
+  })
+  .catch(function() {
+    document.getElementById('prompts-grid').innerHTML = '<p class="empty">שגיאה בטעינת הפרומפטים. נסה לרענן.</p>';
+  });
+
+  function renderPrompts(list) {
+    var grid = document.getElementById('prompts-grid');
+    var count = document.getElementById('results-count');
+    count.textContent = list.length + ' פרומפטים';
+    if (!list.length) {
+      grid.innerHTML = '<p class="empty">לא נמצאו פרומפטים</p>';
+      return;
+    }
+    grid.innerHTML = list.map(function(p) {
+      var diff = p.difficulty || 'beginner';
+      var safePrompt = (p.prompt || '').replace(/\\/g,'\\\\').replace(/"/g,'&quot;');
+      var shortPrompt = (p.prompt || '').substring(0, 180) + ((p.prompt||'').length > 180 ? '...' : '');
+      return '<div class="prompt-card">' +
+        '<div class="card-top">' +
+        '<h3 class="card-title">' + (p.title||'') + '</h3>' +
+        '<span class="card-difficulty ' + diff + '">' + diff + '</span>' +
+        '</div>' +
+        '<p class="card-prompt">' + shortPrompt + '</p>' +
+        '<div class="card-footer">' +
+        '<span class="card-category">// ' + (p.category||'') + '</span>' +
+        '<button class="copy-btn" data-prompt="' + safePrompt + '" onclick="copyPrompt(this)">העתק פרומפט</button>' +
+        '</div></div>';
+    }).join('');
+  }
+
+  function copyPrompt(btn) {
+    var text = btn.getAttribute('data-prompt');
+    navigator.clipboard.writeText(text).then(function() {
+      btn.textContent = '✓ הועתק!';
+      btn.classList.add('copied');
+      setTimeout(function() {
+        btn.textContent = 'העתק פרומפט';
+        btn.classList.remove('copied');
+      }, 2000);
+    });
+  }
+
+  function filterByCategory(cat, btn) {
+    _activeCategory = cat;
+    document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
+    if (btn) btn.classList.add('active');
+    applyFilters();
+  }
+
+  function filterPrompts() { applyFilters(); }
+
+  function applyFilters() {
+    var q = (document.getElementById('search-input').value || '').toLowerCase();
+    var filtered = _all.filter(function(p) {
+      var catMatch = _activeCategory === 'all' || p.category === _activeCategory;
+      var searchMatch = !q || (p.title||'').toLowerCase().includes(q) || (p.prompt||'').toLowerCase().includes(q);
+      return catMatch && searchMatch;
+    });
+    renderPrompts(filtered);
+  }
+</script>
+</body>
+</html>
