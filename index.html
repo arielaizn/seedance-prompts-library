@@ -185,7 +185,7 @@ function toggleMute(e,id){
   if(!v)return;
   v.muted=!v.muted;
   b.textContent=v.muted?'🔇':'🔊';
-  b.title=v.muted?'הדלק סאונד':'כבה סאונד'; b.textContent=v.muted?'🔇':'🔊';
+  b.title=v.muted?'הדלק סאונד':'כבה סאונד';
 }
 function cp(btn){navigator.clipboard.writeText(btn.getAttribute('data-p')).then(()=>{btn.textContent='✓ הועתק!';btn.classList.add('ok');setTimeout(()=>{btn.textContent='העתק';btn.classList.remove('ok');},2000);});}
 function fc(cat,btn){_c=cat;document.querySelectorAll('.fb').forEach(b=>b.classList.remove('active'));btn.classList.add('active');af();}
