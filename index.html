@@ -130,8 +130,8 @@ function rp(list){
     var sp=(p.prompt||'').replace(/"/g,'&quot;').replace(/\n/g,' ');
     var short=(p.prompt||'').substring(0,160)+((p.prompt||'').length>160?'...':'');
     var vid=p.preview_video_url
-      ?'<div class="vthumb" id="vt_'+p.id+'"><video src="'+p.preview_video_url+'" preload="metadata" loop playsinline></video><div class="play-ov" onclick="tv(this,\''+p.id+'\')"><div class="play-circle"><svg width="16" height="16" viewBox="0 0 24 24" fill="black"><polygon points="5,3 19,12 5,21"/></svg></div></div><span class="badge-src">'+(p.source==='x.com'?'𝕏 Real prompt':'')+'</span></div>'
-      :'<div class="vthumb" style="display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:12px;">אין וידאו</div>';
+      ?'<div class="vthumb" id="vt_'+p.id+'"><video src="'+p.preview_video_url+'" preload="metadata" loop playsinline></video><div class="play-ov" onclick="tv(this,\''+p.id+'\')"><div class="play-circle"><svg width="16" height="16" viewBox="0 0 24 24" fill="black"><polygon points="5,3 19,12 5,21"/></svg></div></div><span class="badge-src">𝕏 Real prompt</span></div>'
+      :(p.tweet_url?'<a href="'+p.tweet_url+'" target="_blank" class="vthumb" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-decoration:none;cursor:pointer;"><span style="font-size:22px">𝕏</span><span style="font-size:11px;color:var(--muted);">צפה בוידאו המקורי</span></a>':'<div class="vthumb" style="display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:12px;">אין וידאו</div>');
     var xb=p.tweet_url?'<a href="'+p.tweet_url+'" target="_blank" class="xbtn">𝕏</a>':'';
     return '<div class="card">'+vid+'<div class="cbody"><div class="ctop"><h3 class="ctitle">'+(p.title||'')+'</h3><span class="diff '+diff+'">'+diff+'</span></div><p class="cprompt">'+short+'</p><div class="cfoot"><div class="cmeta"><span class="ccat">// '+(p.category||'')+'</span>'+(p.author?'<span class="cauthor">'+p.author+'</span>':'')+'</div><div class="cactions">'+xb+'<button class="copybtn" data-p="'+sp+'" onclick="cp(this)">העתק</button></div></div></div></div>';
   }).join('');
