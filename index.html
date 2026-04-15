@@ -170,10 +170,10 @@ function rp(list){
     io.observe(el);
     var v=el.querySelector('video');
     if(!v) return;
-    el.addEventListener('mouseenter',function(){v.muted=true;v.play().catch(function(){});});
+    el.addEventListener('mouseenter',function(){v.play().catch(function(){});});
     el.addEventListener('mouseleave',function(){v.pause();v.currentTime=0;});
     // Mobile: tap to play/pause
-    el.addEventListener('click',function(){if(v.paused){v.muted=true;v.play().catch(function(){});}else{v.pause();}});
+    el.addEventListener('click',function(){if(v.paused){v.play().catch(function(){});}else{v.pause();}});
   });
 }
 
